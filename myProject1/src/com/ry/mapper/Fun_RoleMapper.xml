@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ry.dao.FunRoleDao" >
+  <resultMap id="BaseResultMap" type="com.ry.pojo.Fun_Role" >
+    <id column="fun_role_id" property="funRoleId" jdbcType="VARCHAR" />
+    <result column="roleid" property="roleid" jdbcType="VARCHAR" />
+    <result column="funid" property="funid" jdbcType="VARCHAR" />
+    <result column="funcreate" property="funcreate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    fun_role_id, roleid, funid, funcreate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from fun_role
+    where fun_role_id = #{funRoleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from fun_role
+    where fun_role_id = #{funRoleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ry.pojo.Fun_Role" >
+    insert into fun_role (fun_role_id, roleid, funid, 
+      funcreate)
+    values (#{funRoleId,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}, #{funid,jdbcType=VARCHAR}, 
+      #{funcreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ry.pojo.Fun_Role" >
+    insert into fun_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="funRoleId != null" >
+        fun_role_id,
+      </if>
+      <if test="roleid != null" >
+        roleid,
+      </if>
+      <if test="funid != null" >
+        funid,
+      </if>
+      <if test="funcreate != null" >
+        funcreate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="funRoleId != null" >
+        #{funRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="funid != null" >
+        #{funid,jdbcType=VARCHAR},
+      </if>
+      <if test="funcreate != null" >
+        #{funcreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ry.pojo.Fun_Role" >
+    update fun_role
+    <set >
+      <if test="roleid != null" >
+        roleid = #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="funid != null" >
+        funid = #{funid,jdbcType=VARCHAR},
+      </if>
+      <if test="funcreate != null" >
+        funcreate = #{funcreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where fun_role_id = #{funRoleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ry.pojo.Fun_Role" >
+    update fun_role
+    set roleid = #{roleid,jdbcType=VARCHAR},
+      funid = #{funid,jdbcType=VARCHAR},
+      funcreate = #{funcreate,jdbcType=TIMESTAMP}
+    where fun_role_id = #{funRoleId,jdbcType=VARCHAR}
+  </update>
+</mapper>

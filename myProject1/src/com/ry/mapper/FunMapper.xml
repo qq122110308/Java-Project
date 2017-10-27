@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ry.dao.FunDao" >
+  <resultMap id="funMap" type="com.ry.pojo.Fun" >
+    <id column="funid" property="funid" jdbcType="VARCHAR" />
+    <result column="funname" property="funname" jdbcType="VARCHAR" />
+    <result column="funurl" property="funurl" jdbcType="VARCHAR" />
+    <result column="funicon" property="funicon" jdbcType="VARCHAR" />
+    <result column="funfathernode" property="funfathernode" jdbcType="VARCHAR" />
+    <result column="funcreate" property="funcreate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    funid, funname, funurl, funicon, funfathernode, funcreate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="funMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from fun
+    where funid = #{funid,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询所有的数据 -->
+  <!-- 这里的返回类型是 funMap -->
+  <select id="selectAll"  resultMap="funMap" >
+  	select 
+  	<include refid="Base_Column_List"  /> 
+  	from fun
+  </select>
+  
+  
+  <!-- 查询用户所拥有的权限 -->
+  <select id="selectByUser" resultMap="funMap">
+  	select <include refid="Base_Column_List"  />  
+  	from fun 
+  	where  funid in (select funid from fun_role 
+  	where roleid in (select roleid from user_role where userid = #{userid,jdbcType=VARCHAR}))	
+  </select>
+  
+  <select id="selectCount"  resultType="java.lang.Long"  >
+  	select 
+  		count(*)
+  	from fun
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from fun
+    where funid = #{funid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ry.pojo.Fun" >
+    insert into fun (funid, funname, funurl, 
+      funicon, funfathernode, funcreate
+      )
+    values (#{funid,jdbcType=VARCHAR}, #{funname,jdbcType=VARCHAR}, #{funurl,jdbcType=VARCHAR}, 
+      #{funicon,jdbcType=VARCHAR}, #{funfathernode,jdbcType=VARCHAR}, #{funcreate,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ry.pojo.Fun" >
+    insert into fun
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="funid != null" >
+        funid,
+      </if>
+      <if test="funname != null" >
+        funname,
+      </if>
+      <if test="funurl != null" >
+        funurl,
+      </if>
+      <if test="funicon != null" >
+        funicon,
+      </if>
+      <if test="funfathernode != null" >
+        funfathernode,
+      </if>
+      <if test="funcreate != null" >
+        funcreate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="funid != null" >
+        #{funid,jdbcType=VARCHAR},
+      </if>
+      <if test="funname != null" >
+        #{funname,jdbcType=VARCHAR},
+      </if>
+      <if test="funurl != null" >
+        #{funurl,jdbcType=VARCHAR},
+      </if>
+      <if test="funicon != null" >
+        #{funicon,jdbcType=VARCHAR},
+      </if>
+      <if test="funfathernode != null" >
+        #{funfathernode,jdbcType=VARCHAR},
+      </if>
+      <if test="funcreate != null" >
+        #{funcreate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ry.pojo.Fun" >
+    update fun
+    <set >
+      <if test="funname != null" >
+        funname = #{funname,jdbcType=VARCHAR},
+      </if>
+      <if test="funurl != null" >
+        funurl = #{funurl,jdbcType=VARCHAR},
+      </if>
+      <if test="funicon != null" >
+        funicon = #{funicon,jdbcType=VARCHAR},
+      </if>
+      <if test="funfathernode != null" >
+        funfathernode = #{funfathernode,jdbcType=VARCHAR},
+      </if>
+      <if test="funcreate != null" >
+        funcreate = #{funcreate,jdbcType=DATE},
+      </if>
+    </set>
+    where funid = #{funid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ry.pojo.Fun" >
+    update fun
+    set funname = #{funname,jdbcType=VARCHAR},
+      funurl = #{funurl,jdbcType=VARCHAR},
+      funicon = #{funicon,jdbcType=VARCHAR},
+      funfathernode = #{funfathernode,jdbcType=VARCHAR},
+      funcreate = #{funcreate,jdbcType=DATE}
+    where funid = #{funid,jdbcType=VARCHAR}
+  </update>
+</mapper>
