@@ -601,19 +601,29 @@ throw new Error('AdminLTE requires jQuery')
     var neg           = $(Selector.mainHeader).outerHeight() + footerHeight
     var windowHeight  = $(window).height()
     var sidebarHeight = $(Selector.sidebar).height() || 0
-
+    
+    //百度翻译：
+    //根据文档的高度设置内容和边栏的最小高度
     // Set the min-height of the content and sidebar based on
     // the height of the document.
+    /*console.log("footerHeight:"+footerHeight);
+    console.log("neg:"+neg);
+    console.log("windowHeight:"+windowHeight);*/
+    
     if ($('body').hasClass(ClassName.fixed)) {
       $(Selector.contentWrapper).css('min-height', windowHeight - footerHeight)
     } else {
+      //实际上走的是这里	
       var postSetHeight
 
       if (windowHeight >= sidebarHeight) {
-        $(Selector.contentWrapper).css('min-height', windowHeight - neg)
+    	 /*console.log("333");*/
+    	 
+        $(Selector.contentWrapper).css('min-height', windowHeight - neg )
         postSetHeight = windowHeight - neg
       } else {
-        $(Selector.contentWrapper).css('min-height', sidebarHeight)
+    	  /*console.log("444");*/
+    	  $(Selector.contentWrapper).css('min-height', sidebarHeight)
         postSetHeight = sidebarHeight
       }
 

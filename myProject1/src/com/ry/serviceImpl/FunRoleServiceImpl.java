@@ -52,6 +52,11 @@ public class FunRoleServiceImpl implements FunRoleService{
 		// TODO Auto-generated method stub
 		return funRoleDao.updateByPrimaryKey(record);
 	}
+
+	@Override
+	public List selectFunRole(String roleId) {
+		return funRoleDao.selectFunRole(roleId);
+	}
 	
 	
 }

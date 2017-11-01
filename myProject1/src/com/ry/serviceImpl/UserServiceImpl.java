@@ -149,4 +149,24 @@ public class UserServiceImpl implements UserService{
 	
 	
 	}
+
+	@Override
+	public User selectByPrimaryKey(String userid) {
+		return userDao.selectByPrimaryKey(userid);
+	}
+
+	@Override
+	public int updateByPrimaryKey(User record) {
+		return userDao.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(User record) {
+		return userDao.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public int deleteByPrimaryKey(String userid) {
+		return userDao.deleteByPrimaryKey(userid);
+	}
 }

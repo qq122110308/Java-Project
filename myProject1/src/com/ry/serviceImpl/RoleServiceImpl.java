@@ -24,7 +24,7 @@ public class RoleServiceImpl implements RoleService{
 	@Override
 	public List selectAllRole() {
 		// TODO Auto-generated method stub
-		return null;
+		return roles.selectAll();
 	}
 
 	@Override

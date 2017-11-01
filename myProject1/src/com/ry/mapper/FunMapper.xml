@@ -42,6 +42,12 @@
   	from fun
   </select>
   
+  <select id="selectByRole" resultMap="funMap" parameterType="java.lang.String">
+  	select 
+  	<include refid="Base_Column_List"  />  
+  	from fun where roleid = #{foleid}	
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from fun
     where funid = #{funid,jdbcType=VARCHAR}

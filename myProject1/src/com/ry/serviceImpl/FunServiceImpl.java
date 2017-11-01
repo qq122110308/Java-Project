@@ -92,6 +92,8 @@ public class FunServiceImpl implements FunService{
 	public List<Fun> selectByUser(String userid) {
 		return funDao.selectByUser(userid);
 	}
+
+	
 	
 	
 

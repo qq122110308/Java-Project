@@ -22,6 +22,11 @@ public interface RoleDao {
     
 	List<Role> selectAll();
     
+	//下面是自己写的 ，可以在baseDao里面写 这里继承
+	
     Long selectCount();
+    
+    //多条件查询，这里的多条件要自己写
+    List selectByConditions(List cList);
     
 }

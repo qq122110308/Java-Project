@@ -16,4 +16,9 @@ public interface FunRoleDao {
     int updateByPrimaryKeySelective(Fun_Role record);
 
     int updateByPrimaryKey(Fun_Role record);
+    
+    //下面是自己写的
+    
+    //查询某个角色锁拥有的权限
+    List selectFunRole(String roleId);
 }

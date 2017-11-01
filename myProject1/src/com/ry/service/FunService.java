@@ -26,4 +26,8 @@ public interface FunService {
 
     //查询用户所拥有的权限
     List<Fun> selectByUser(String userid); 
+    
+    
+
+    
 }

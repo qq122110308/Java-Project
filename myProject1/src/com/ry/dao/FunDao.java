@@ -19,9 +19,12 @@ public interface FunDao {
     
     List<Fun> selectAll();
     
+    //下面都是自己写的
+    
     Long selectCount();
     
     List<Fun> selectByUser(String userid); 
     
-	
+    
+    
 }

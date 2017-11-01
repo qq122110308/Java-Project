@@ -6,8 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>导出列表</title>
 </head>
-<body>
-	 <body class="hold-transition skin-blue sidebar-mini">
+
+<body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 		<!-- 头部 -->
 		<jsp:include page="../commons/top.jsp" ></jsp:include>
