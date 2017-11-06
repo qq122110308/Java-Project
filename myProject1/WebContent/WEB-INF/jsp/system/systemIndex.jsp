@@ -39,7 +39,7 @@
             <!-- /.box-header -->
             <div class="box-body">
             	<div class="col-md-3">
-            		<table class="table table-bordered text-center">
+            		<table class="table table-bordered text-center ">
             			<tr>
             				<td style="padding: 2px;"><button type="button" class="col-md-1 btn btn-block btn-primary"  onclick="addData()">添加</button></td>
             				<td style="padding: 2px;"><button type="button" class="col-md-1 btn btn-block btn-info"  onclick="updateData()" >修改</button></td>
@@ -48,7 +48,7 @@
             		</table>
             	</div>
             
-              <table border="1" class="table table-bordered">
+              <table border="1" class="table table-bordered table-striped  table-hover">
                 <tr>
                   <th>序号</th>
                   <th>功能名称</th>
@@ -57,6 +57,7 @@
                   <th>创建时间</th>	
                 </tr>
                 
+                <tbody>
                 <!-- 显示数据库数据 -->
                	<c:forEach var="list" items="${pageInfo.list}" varStatus="status">
                		<tr>
@@ -69,9 +70,8 @@
                			<td><fmt:formatDate value="${list.funcreate}" pattern="yyyy-MM-dd"/></td>
                		</tr>
                	</c:forEach>
-                	
-                		
                 <!-- 显示数据库数据 -->
+                </tbody>
                 
                 <tr style="display:none;">
                   <td>1.</td>

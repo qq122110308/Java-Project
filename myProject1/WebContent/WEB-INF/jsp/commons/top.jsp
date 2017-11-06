@@ -36,7 +36,7 @@
     <!-- Logo -->
     <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>m</b>s</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>个人</b>后台</span>
     </a>
@@ -53,9 +53,9 @@
           <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
+              <span class="label label-success"></span>
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu"  style="display:none;" >
               <li class="header">You have 4 messages</li>
               <li>
                 <!-- inner menu: contains the actual data -->
@@ -130,9 +130,9 @@
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
+              <span class="label label-warning"></span>
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" style="display:none;">
               <li class="header">You have 10 notifications</li>
               <li>
                 <!-- inner menu: contains the actual data -->
@@ -172,9 +172,9 @@
           <li class="dropdown tasks-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-flag-o"></i>
-              <span class="label label-danger">9</span>
+              <span class="label label-danger"></span>
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" style="display:none;">
               <li class="header">You have 9 tasks</li>
               <li>
                 <!-- inner menu: contains the actual data -->
@@ -255,24 +255,24 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="../dist/img/mypictrue.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  	阮洋 - Web开发工程师
+                  <small>自2016年6月起</small>
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
+              <li class="user-body" >
                 <div class="row">
                   <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
+                    <a href="#">工作经历</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
+                    <a href="#">工作能力</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
+                    <a href="#">工作时长</a>
                   </div>
                 </div>
                 <!-- /.row -->
@@ -280,17 +280,18 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="#" class="btn btn-default btn-flat">个人简介</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="#" class="btn btn-default btn-flat">退出</a>
                 </div>
               </li>
             </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->
           <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            <a href="#" data-toggle=""><i class="fa fa-gears"></i></a>
+          	<a href="#" data-toggle="control-sidebar" style="display:none;"><i class="fa fa-gears"></i></a>
           </li>
         </ul>
       </div>

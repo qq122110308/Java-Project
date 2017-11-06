@@ -27,7 +27,7 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
+        <li class="header">菜单</li>
         
         <!-- 植入左侧功能栏 -->
         <c:forEach items="${funList}"  var="list"  varStatus="stauts">

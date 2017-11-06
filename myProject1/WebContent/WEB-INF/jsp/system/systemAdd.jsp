@@ -38,7 +38,7 @@
 			            <div class="box-header with-border">
 			              <h3 class="box-title">添加</h3>
 			            </div>
-						<form class="form-horizontal" action="add">
+						<form class="form-horizontal" action="add" method="post" >
 			              <div class="box-body">
 			                <div class="form-group">
 			                  <label  class="col-sm-2 control-label">功能名称</label>

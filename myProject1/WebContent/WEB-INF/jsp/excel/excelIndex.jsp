@@ -24,7 +24,7 @@
 		      <ol class="breadcrumb">
 		        <li><a href="#"><i class="fa fa-dashboard"></i>主页</a></li>
 		        <li><a href="#">Excel导出管理</a></li>
-		        <li class="active">用户功能</li>
+		        <li class="active">Excel功能</li>
 		      </ol>
 		    </section>
 		    <!-- 表格 -->
@@ -47,7 +47,7 @@
             		</table>
             	</div>
             
-              <table border="1" class="table table-bordered">
+              <table border="1" class="table table-responsive table-bordered table-striped  table-hover">
                 <tr>
                   <th>序号</th>
                   <th>用户名称</th>
@@ -55,6 +55,7 @@
                   <th>联系电话</th>
                 </tr>
                 
+                <tbody>
                 <!-- 显示数据库数据 -->
                	<c:forEach var="list" items="${pageInfo.list}" varStatus="status">
                		<tr>
@@ -67,7 +68,7 @@
                			
                		</tr>
                	</c:forEach>
-                	
+                </tbody>	
                 		
                 <!-- 显示数据库数据 -->
                 
