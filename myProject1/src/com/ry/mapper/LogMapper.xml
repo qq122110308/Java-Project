@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ry.dao.LogDao" >
+  <resultMap id="BaseResultMap" type="com.ry.pojo.Log" >
+    <id column="logid" property="logid" jdbcType="VARCHAR" />
+    <result column="logtype" property="logtype" jdbcType="VARCHAR" />
+    <result column="logname" property="logname" jdbcType="VARCHAR" />
+    <result column="logcreate" property="logcreate" jdbcType="DATE" />
+    <result column="logexception" property="logexception" jdbcType="VARCHAR" />
+    <result column="logip" property="logip" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    logid, logtype, logname, logcreate, logexception, logip
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from log
+    where logid = #{logid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from log
+    where logid = #{logid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ry.pojo.Log" >
+    insert into log (logid, logtype, logname, 
+      logcreate, logexception, logip
+      )
+    values (#{logid,jdbcType=VARCHAR}, #{logtype,jdbcType=VARCHAR}, #{logname,jdbcType=VARCHAR}, 
+      #{logcreate,jdbcType=DATE}, #{logexception,jdbcType=VARCHAR}, #{logip,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ry.pojo.Log" >
+    insert into log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logid != null" >
+        logid,
+      </if>
+      <if test="logtype != null" >
+        logtype,
+      </if>
+      <if test="logname != null" >
+        logname,
+      </if>
+      <if test="logcreate != null" >
+        logcreate,
+      </if>
+      <if test="logexception != null" >
+        logexception,
+      </if>
+      <if test="logip != null" >
+        logip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logid != null" >
+        #{logid,jdbcType=VARCHAR},
+      </if>
+      <if test="logtype != null" >
+        #{logtype,jdbcType=VARCHAR},
+      </if>
+      <if test="logname != null" >
+        #{logname,jdbcType=VARCHAR},
+      </if>
+      <if test="logcreate != null" >
+        #{logcreate,jdbcType=DATE},
+      </if>
+      <if test="logexception != null" >
+        #{logexception,jdbcType=VARCHAR},
+      </if>
+      <if test="logip != null" >
+        #{logip,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ry.pojo.Log" >
+    update log
+    <set >
+      <if test="logtype != null" >
+        logtype = #{logtype,jdbcType=VARCHAR},
+      </if>
+      <if test="logname != null" >
+        logname = #{logname,jdbcType=VARCHAR},
+      </if>
+      <if test="logcreate != null" >
+        logcreate = #{logcreate,jdbcType=DATE},
+      </if>
+      <if test="logexception != null" >
+        logexception = #{logexception,jdbcType=VARCHAR},
+      </if>
+      <if test="logip != null" >
+        logip = #{logip,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where logid = #{logid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ry.pojo.Log" >
+    update log
+    set logtype = #{logtype,jdbcType=VARCHAR},
+      logname = #{logname,jdbcType=VARCHAR},
+      logcreate = #{logcreate,jdbcType=DATE},
+      logexception = #{logexception,jdbcType=VARCHAR},
+      logip = #{logip,jdbcType=VARCHAR}
+    where logid = #{logid,jdbcType=VARCHAR}
+  </update>
+</mapper>
