@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ry.commons.PageInfo;
 import com.ry.pojo.Fun;
 import com.ry.service.FunService;
+import com.ry.utils.BuildUUID;
 
 @Controller
 @RequestMapping("system")
@@ -58,11 +59,11 @@ public class FunController implements Serializable {
 	public String add(String funname,String funurl,String funicon,String funfathernode,HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException{
 		
 		//解决中文乱码问题  除了这种还有没有别的方式 进行转码  我记得 web.xml那里已经处理过了
-		funname=new String(funname.trim().getBytes("ISO-8859-1"),"utf-8");
+		//funname=new String(funname.trim().getBytes("ISO-8859-1"),"utf-8");
 		
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		
-		String funid= UUID.randomUUID().toString().replace("-", "");
+		String funid= BuildUUID.getUUID();
 		System.out.println(funname);
 		Fun fun=new Fun();
 		fun.setFunid(funid);
@@ -75,7 +76,7 @@ public class FunController implements Serializable {
 
 		//由于添加了数据 这里要重新处理左侧菜单栏
 		PageInfo<Fun> funList=funService.selectAll(1,10);
-		session.setAttribute("funList", funList);
+		session.setAttribute("funList", funList.getList());
 		
 		return "redirect:index";
 	}

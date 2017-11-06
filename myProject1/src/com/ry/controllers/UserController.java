@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ry.annotation.SystemControllerLog;
 import com.ry.commons.PageInfo;
 import com.ry.dto.UserDTO;
 import com.ry.pojo.Fun;
@@ -148,6 +149,9 @@ public class UserController {
 	
 	
 	@RequestMapping("/userIndex")
+	//这里 不要带参数  否则不会匹配的
+	//@SystemControllerLog(description = "查询用户")
+	@SystemControllerLog
 	public String index(HttpServletRequest request, Integer pageIndex ){
 		//查询用户列表
 		if(pageIndex==null){

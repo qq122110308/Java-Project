@@ -2,8 +2,11 @@ package com.ry.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.ry.pojo.Fun;
 
+@Component("funDao")
 public interface FunDao {
     int deleteByPrimaryKey(String funid);
 

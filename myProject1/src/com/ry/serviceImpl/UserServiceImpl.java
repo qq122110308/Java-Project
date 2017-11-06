@@ -18,6 +18,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
+import com.ry.annotation.SystemServiceLog;
 import com.ry.commons.PageInfo;
 import com.ry.dao.UserDao;
 import com.ry.pojo.Fun;
@@ -56,6 +57,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	@SystemServiceLog(description = "查询用户")
 	public PageInfo<User> selectAll(int pageIndex, int pageNum) {
 		PageInfo pageInfo=new PageInfo();
 		//根据条件获取总条数
