@@ -1,6 +1,10 @@
 package com.ry.service;
 
+import java.util.List;
+
+import com.ry.commons.PageInfo;
 import com.ry.pojo.Log;
+import com.ry.pojo.User;
 
 /** 
 * @author ry 
@@ -20,5 +24,12 @@ public interface LogService {
     int updateByPrimaryKeySelective(Log record);
 
     int updateByPrimaryKey(Log record);
+    
+    List<Log> selectAll();
+    
+    Long selectCount();
+    
+    public PageInfo<Log> selectAll(int pageIndex, int pageNum);
+    
 }
  

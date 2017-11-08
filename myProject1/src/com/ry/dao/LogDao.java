@@ -1,8 +1,11 @@
 package com.ry.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.ry.pojo.Log;
+import com.ry.pojo.User;
 
 @Component("logDao")
 public interface LogDao {
@@ -17,4 +20,8 @@ public interface LogDao {
     int updateByPrimaryKeySelective(Log record);
 
     int updateByPrimaryKey(Log record);
+    
+    List<Log> selectAll();
+    
+    Long selectCount();
 }

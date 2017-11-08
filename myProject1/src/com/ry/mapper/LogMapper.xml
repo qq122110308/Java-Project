@@ -18,6 +18,22 @@
     from log
     where logid = #{logid,jdbcType=VARCHAR}
   </select>
+  
+  <!-- 查询所有的数据 -->
+  <!-- 这里的返回类型是 UserMap -->
+  <select id="selectAll"  resultMap="BaseResultMap" >
+  	select 
+  	<include refid="Base_Column_List"  /> 
+  	from log
+  </select>
+  
+  <select id="selectCount"  resultType="java.lang.Long"  >
+  	select 
+  		count(*)
+  	from log
+  </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from log
     where logid = #{logid,jdbcType=VARCHAR}

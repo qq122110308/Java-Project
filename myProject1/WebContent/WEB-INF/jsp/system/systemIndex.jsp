@@ -1,12 +1,156 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@include file="../commons/commons_js.jsp" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>系统管理</title>
+
+<link rel="stylesheet" href="../css/demo.css" type="text/css">
+<link rel="stylesheet" href="../css/zTreeStyle/zTreeStyle.css" type="text/css">
+
+<script type="text/javascript" src="../js/ztree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="../js/ztree/jquery.ztree.excheck.js"></script>
+	<script type="text/javascript" src="../js/ztree/jquery.ztree.exedit.js"></script>
+
+<SCRIPT type="text/javascript">
+	//这里请求系统菜单
+
+	$(function(){
+		$.ajax({
+			type:"POST",			
+			url:"sTree",
+			data:{t:Math.random()},
+			dataType:"json",
+			success:function(res){
+				//console.log(res);
+				var zNodes = res;
+				var setting = {
+						view: {
+							selectedMulti: false
+						},
+						edit: {
+							enable: true,
+							showRemoveBtn: false,
+							showRenameBtn: false
+						},
+						data: {
+							keep: {
+								parent:true,
+								leaf:true
+							},
+							simpleData: {
+								enable: true
+							}
+						},
+						callback: {
+							beforeDrag: beforeDrag,
+							beforeRemove: beforeRemove,
+							beforeRename: beforeRename,
+							onRemove: onRemove
+						}
+					};
+				$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+				
+			}
+		});
+	});
+	
+	
+	function beforeDrag(treeId, treeNodes) {
+		return false;
+	}
+	function beforeRemove(treeId, treeNode) {
+		className = (className === "dark" ? "":"dark");
+		showLog("[ "+getTime()+" beforeRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+		return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+	}
+	function onRemove(e, treeId, treeNode) {
+		showLog("[ "+getTime()+" onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+	}
+	function beforeRename(treeId, treeNode, newName) {
+		if (newName.length == 0) {
+			alert("节点名称不能为空.");
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			setTimeout(function(){zTree.editName(treeNode)}, 10);
+			return false;
+		}
+		return true;
+	}
+	function showLog(str) {
+		if (!log) log = $("#log");
+		log.append("<li class='"+className+"'>"+str+"</li>");
+		if(log.children("li").length > 8) {
+			log.get(0).removeChild(log.children("li")[0]);
+		}
+	}
+	function getTime() {
+		var now= new Date(),
+		h=now.getHours(),
+		m=now.getMinutes(),
+		s=now.getSeconds(),
+		ms=now.getMilliseconds();
+		return (h+":"+m+":"+s+ " " +ms);
+	}
+
+	var newCount = 1;
+	function add(e) {
+		var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+		isParent = e.data.isParent,
+		nodes = zTree.getSelectedNodes(),
+		treeNode = nodes[0];
+		if (treeNode) {
+			treeNode = zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, isParent:isParent, name:"new node" + (newCount++)});
+		} else {
+			treeNode = zTree.addNodes(null, {id:(100 + newCount), pId:0, isParent:isParent, name:"new node" + (newCount++)});
+		}
+		if (treeNode) {
+			zTree.editName(treeNode[0]);
+		} else {
+			alert("叶子节点被锁定，无法增加子节点");
+		}
+	};
+	function edit() {
+		var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+		nodes = zTree.getSelectedNodes(),
+		treeNode = nodes[0];
+		if (nodes.length == 0) {
+			alert("请先选择一个节点");
+			return;
+		}
+		zTree.editName(treeNode);
+	};
+	function remove(e) {
+		var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+		nodes = zTree.getSelectedNodes(),
+		treeNode = nodes[0];
+		if (nodes.length == 0) {
+			alert("请先选择一个节点");
+			return;
+		}
+		var callbackFlag = $("#callbackTrigger").attr("checked");
+		zTree.removeNode(treeNode, callbackFlag);
+	};
+	function clearChildren(e) {
+		var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+		nodes = zTree.getSelectedNodes(),
+		treeNode = nodes[0];
+		if (nodes.length == 0 || !nodes[0].isParent) {
+			alert("请先选择一个父节点");
+			return;
+		}
+		zTree.removeChildNodes(treeNode);
+	};
+	
+		
+
+	</SCRIPT>
+
+
 </head>
+
 
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -37,96 +181,14 @@
               <h3 class="box-title">简单表格1</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-            	<div class="col-md-3">
-            		<table class="table table-bordered text-center ">
-            			<tr>
-            				<td style="padding: 2px;"><button type="button" class="col-md-1 btn btn-block btn-primary"  onclick="addData()">添加</button></td>
-            				<td style="padding: 2px;"><button type="button" class="col-md-1 btn btn-block btn-info"  onclick="updateData()" >修改</button></td>
-            				<td style="padding: 2px;"><button type="button" class="col-md-1 btn btn-block btn-danger"  onclick="deleteData()">删除</button></td>
-            			</tr>
-            		</table>
-            	</div>
-            
-              <table border="1" class="table table-bordered table-striped  table-hover">
-                <tr>
-                  <th>序号</th>
-                  <th>功能名称</th>
-                  <th>功能对应地址</th>
-                  <th>对应标签</th>
-                  <th>创建时间</th>	
-                </tr>
-                
-                <tbody>
-                <!-- 显示数据库数据 -->
-               	<c:forEach var="list" items="${pageInfo.list}" varStatus="status">
-               		<tr>
-               			<td>
-               					<label><input type="radio" name="funid"  value="${list.funid }" >${status.index+1}</label>
-               			</td>
-               			<td>${list.funname }</td>
-               			<td>${list.funurl }</td>
-               			<td>${list.funicon }</td>
-               			<td><fmt:formatDate value="${list.funcreate}" pattern="yyyy-MM-dd"/></td>
-               		</tr>
-               	</c:forEach>
-                <!-- 显示数据库数据 -->
-                </tbody>
-                
-                <tr style="display:none;">
-                  <td>1.</td>
-                  <td>Update software</td>
-                  <td>
-                    <div class="progress progress-xs">
-                      <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                    </div>
-                  </td>
-                  <td><span class="badge bg-red">55%</span></td>
-                </tr>
-                <tr style="display:none;">
-                  <td>2.</td>
-                  <td>Clean database</td>
-                  <td>
-                    <div class="progress progress-xs">
-                      <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                    </div>
-                  </td>
-                  <td><span class="badge bg-yellow">70%</span></td>
-                </tr>
-                <tr style="display:none;">
-                  <td>3.</td>
-                  <td>Cron job running</td>
-                  <td>
-                    <div class="progress progress-xs progress-striped active">
-                      <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                    </div>
-                  </td>
-                  <td><span class="badge bg-light-blue">30%</span></td>
-                </tr>
-                <tr style="display:none;">
-                  <td>4.</td>
-                  <td>Fix and squish bugs</td>
-                  <td>
-                    <div class="progress progress-xs progress-striped active">
-                      <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                    </div>
-                  </td>
-                  <td><span class="badge bg-green">90%</span></td>
-                </tr>
-              </table>
+            <div class="box-body content_wrap">
+            	<div class="zTreeDemoBackground left">
+					<ul id="treeDemo" class="ztree"></ul>
+				</div>
+            	
+              
             </div>
             <!-- /.box-body -->
-            <!-- 分页操作 -->
-            <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">&laquo;</a></li>
-                <c:forEach  begin="1" end="${pageInfo.pages }"   varStatus="status1">
-					<li><a href="">${status1.index}</a></li>
-                </c:forEach>
-                
-                <li><a href="#">&raquo;</a></li>
-              </ul>
-            </div>
           </div>
           <!-- /.box -->
 		    	</div>
@@ -139,44 +201,7 @@
 		<jsp:include page="../commons/bottom.jsp" ></jsp:include>
 		
 	</div>
-	
-<!-- jQuery 3 -->
-<script src="../bower_components/jquery/dist/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
-<!-- Bootstrap 3.3.7 -->
-<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="../bower_components/raphael/raphael.min.js"></script>
-<script src="../bower_components/morris.js/morris.min.js"></script>
-<!-- Sparkline -->
-<script src="../bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="../bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="../bower_components/moment/min/moment.min.js"></script>
-<script src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
-<script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../dist/js/pages/dashboard.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
+
 	
 <script type="text/javascript">
 	$(function(){
