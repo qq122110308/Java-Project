@@ -28,8 +28,16 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	
+  <style type="text/css">
+  	.kech{ background-image: url(../images/background.jpg) ;background-size:100%;background-repeat: no-repeat;}
+  </style>	
+
 </head>
-<body class="hold-transition login-page">
+
+
+
+<body class="kech" >
 <div class="login-box">
   <div class="login-logo">
     <a href="../index.jsp"><b>用户</b>登录</a>

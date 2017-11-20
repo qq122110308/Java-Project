@@ -1,6 +1,5 @@
 package com.ry.controllers;
 
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,10 +10,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ry.serviceImpl.RedisServiceImpl;
+
+import net.agkn.hll.HLL;
 
 /** 
 * @author ry 
@@ -78,6 +80,42 @@ public class RedisController {
 		
 		
 		return "success";
+	}
+	
+	
+	//hyperloglog  HyperLogLog一个常用的场景就是统计网站的UV。（独立IP）  还要 fastutil jar包
+	@RequestMapping("/hyperloglog")
+	public void testHyperloglog(){
+		final int seed = 123456;
+		
+		final Integer[] data = new Integer[]{1,1,2,2,3,3,4,4,5,6,6,6,7,7,7,7,8,10}; 
+		
+		final HLL hll = new HLL(13, 5);
+		
+		for (Integer integer : data) {
+			hll.addRaw(integer);	
+		}
+		
+		System.out.println("Distinct count="+ hll.cardinality());
+	}
+	
+	//redis的发布(publish)和订阅(subscribe)
+	@RequestMapping("/publish")
+	public String redisPublish() throws Exception {
+		long t = redisService.publis("redisChat", "there is a test");
+		Thread.sleep(5000);
+    	t = redisService.publis("redisChat", "your mother is boom");
+    	Thread.sleep(5000);
+    	t = redisService.publis("redisChat", "wqnmlgb");
+    	
+		System.out.println(t);
+		return "redis/redisIndex";
+	}
+	//订阅
+	@RequestMapping("/subscriber")
+	public String redisSubscriber(){
+		redisService.subscribe("redisChat");
+		return "";
 	}
 	
 }

@@ -60,6 +60,13 @@
 				            </div>
 				            <!-- /.box-header -->
 				            <div class="box-body">
+				            	<div class="form-group form-horizontal">
+									<label  class="control-label col-sm-2">说明</label>
+				            		<div class="col-sm-10">
+				            			<textarea class="form-control" rows="5" >参考：http://www.runoob.com/redis/redis-strings.html,通过key来取得value</textarea>
+				            		</div>
+				            	</div>
+				            	
 				            	<div class="col-xs-1">
 				            		<table class="table table-bordered text-center">
 				            			<tr>
@@ -110,6 +117,23 @@
 				            </div>
 				            <!-- /.box-header -->
 				            <div class="box-body">
+				            	
+				            	<div class="panel panel-default">
+				            		<div class="panel-heading">
+										<h3 class="panel-title">
+											hash说明
+										</h3>
+				            		</div>
+				            		<div class="panel-body">
+										<div>Redis hash 是一个string类型的field和value的映射表，hash特别适合用于存储对象。</div>
+										<div>Redis 中每个 hash 可以存储 232 - 1 键值对（40多亿）。</div>
+										<div>HMSET key field1 value1 [field2 value2 ] </div>
+										<img class="img-rounded" src="../images/hash1.png" />
+										
+										
+				            		</div>
+				            	</div>
+				            	
 				            	<div class="col-xs-1">
 				            		<table class="table table-bordered text-center">
 				            			<tr>
@@ -164,6 +188,20 @@
 				            </div>
 				            <!-- /.box-header -->
 				            <div class="box-body">
+				            	
+				            	<div class="panel panel-default">
+				            		<div class="panel-heading">
+				            			<h3 class="panel-title">
+				            				List(列表)说明
+				            			</h3>
+				            		</div>
+									<div class="panel-body">
+										<div>Redis列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）</div>
+										<div>一个列表最多可以包含 232 - 1 个元素 (4294967295, 每个列表超过40亿个元素)。</div>
+										<img class="img-rounded" src="../images/list1.png"  />
+									</div>				            		
+				            	</div>
+				            
 				            	<div class="col-xs-1">
 				            		<table class="table table-bordered text-center">
 				            			<tr>
@@ -205,6 +243,19 @@
 			            </div>
 			            <!-- /.box-header -->
 			            <div class="box-body">
+			            	
+			            	<div class="panel">
+			            		<div class="panel-heading">
+			            			<h3 class="panel-title">set说明</h3>
+			            		</div>
+			            		<div class="panel-body">
+									<div>Redis的Set是string类型的无序集合。集合成员是唯一的，这就意味着集合中不能出现重复的数据。</div>			            			
+			            			<div>Redis 中 集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。</div>
+			            			<div>集合中最大的成员数为 232 - 1 (4294967295, 每个集合可存储40多亿个成员)。</div>
+			            			<img alt="别点" class="img-rounded" src="../images/set1.png" />
+			            		</div>
+			            	</div>
+			            
 			            	<div class="col-xs-1">
 			            		<table class="table table-bordered text-center">
 			            			<tr>
@@ -247,6 +298,19 @@
 			            </div>
 			            <!-- /.box-header -->
 			            <div class="box-body">
+			            	<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">zset说明</h3>
+								</div>
+								<div class="panel panel-body">
+									<div>Redis 有序集合和集合一样也是string类型元素的集合,且不允许重复的成员。</div>
+									<div>不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。</div>
+									<div>有序集合的成员是唯一的,但分数(score)却可以重复。</div>
+									<div>集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。 集合中最大的成员数为 232 - 1 (4294967295, 每个集合可存储40多亿个成员)。</div>
+									<img alt="别点" class="img-rounded" src="../images/zset1.png" />
+								</div>								
+			            	</div>
+			            	
 			            	<div class="col-xs-1">
 			            		<table class="table table-bordered text-center">
 			            			<tr>

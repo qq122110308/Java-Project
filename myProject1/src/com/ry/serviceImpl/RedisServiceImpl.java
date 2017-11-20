@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ry.commons.Subscriber;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
@@ -69,8 +70,7 @@ public class RedisServiceImpl {
             release(jedis, isBroken);  
         }  
     } 
-	
-	
+		
 	public void set(Integer key, String value) {  
         Jedis jedis = null;  
         boolean isBroken = false;  
@@ -900,6 +900,28 @@ public class RedisServiceImpl {
         return 0;  
     } 
 	
+    //消息发布
+    public long publis(String channel, String message) throws Exception{
+    	
+    	Jedis jedis = null;
+    	jedis = this.getJedis();
+    	//订阅人的数量
+    	long flag = jedis.publish(channel, message);
+    	
+    	System.out.println("订阅人的数量为："+flag);
+    	
+    	return flag;
+    }
+    
+    //消息订阅  订阅频道
+    public void subscribe(String channel){
+    	Jedis jedis = null;
+    	jedis = this.getJedis();
+    	Subscriber sub = new Subscriber();
+    	
+    	//订阅消息
+    	jedis.subscribe(sub, channel);
+    }
 	 
 }
  
