@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ry.annotation.SystemControllerLog;
 import com.ry.commons.PageInfo;
 import com.ry.dto.RoleDTO;
 import com.ry.pojo.Fun;
@@ -50,6 +51,7 @@ public class RoleController {
 	
 	
 	@RequestMapping("/roleIndex")
+	@SystemControllerLog(description = "查询角色")
 	public String roleIndex(HttpServletRequest request, Integer pageIndex){
 		//查询角色列表
 		if(pageIndex==null){
@@ -72,6 +74,7 @@ public class RoleController {
 	
 	
 	@RequestMapping("/addRole")
+	@SystemControllerLog(description = "添加角色")
 	@Transactional
 	public String add(HttpServletRequest request){
 		
@@ -142,8 +145,9 @@ public class RoleController {
 	 * @return
 	 */
 	@RequestMapping("updateRole")
+	@SystemControllerLog(description = "修改角色")
 	@Transactional
-	public String updateRole(RoleDTO roleDTO)
+	public String updateRole(RoleDTO roleDTO, HttpServletRequest request)
 	{
 		roleService.updateByPrimaryKeySelective(roleDTO);
 		
@@ -183,6 +187,8 @@ public class RoleController {
 		}
 		
 		System.out.println("完成角色修改功能！");
+		request.setAttribute("message", "操作成功");
+		request.setAttribute("title", "操作");
 		
 		return "redirect:/role/roleIndex";
 	}
@@ -193,9 +199,14 @@ public class RoleController {
 	 * @return
 	 */
 	@RequestMapping("/deleteRole")
-	public String deleteRole(String roleid){
+	@SystemControllerLog(description = "删除角色")
+	public String deleteRole(String roleid, HttpServletRequest request){
 		
 		roleService.deleteByPrimaryKey(roleid);
+		
+		request.setAttribute("message", "操作成功");
+		request.setAttribute("title", "操作");
+		
 		return "redirect:/role/roleIndex";
 	}
 	

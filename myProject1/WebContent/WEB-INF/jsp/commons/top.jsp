@@ -250,7 +250,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../dist/img/mypictrue.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">阮洋</span>
+              <span class="hidden-xs">${nowUser.username }</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -258,7 +258,7 @@
                 <img src="../dist/img/mypictrue.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  	阮洋 - Web开发工程师
+                  	${nowUser.username } - Web开发工程师
                   <small>自2016年6月起</small>
                 </p>
               </li>
@@ -283,7 +283,7 @@
                   <a href="#" class="btn btn-default btn-flat">个人简介</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">退出</a>
+                  <a href="../user/goOutLogin" class="btn btn-default btn-flat">退出</a>
                 </div>
               </li>
             </ul>

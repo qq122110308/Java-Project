@@ -36,6 +36,7 @@ import com.ry.service.RoleService;
 import com.ry.service.UserRoleService;
 import com.ry.service.UserService;
 import com.ry.utils.BuildUUID;
+import com.ry.utils.Md5Util;
 
 @Controller
 @RequestMapping("/user")
@@ -70,35 +71,45 @@ public class UserController {
 	 */
 	@RequestMapping("/goLogin")
 	//这里千万不要用responseBody 会以字符串输出 index  或者  user/login
-	public String goLogin(String userAccount,String password,HttpSession session,HttpServletResponse response,HttpServletRequest request)throws Exception{
+	public String goLogin(String validCode,String userAccount,String password,HttpSession session,HttpServletResponse response,HttpServletRequest request)throws Exception{
 		//判断是否登录成功！
 		System.out.println("用户正在进行登录");
 		User user = userService.selectByUserAccount(userAccount);
-		System.out.println(user);
-		
-		if(user==null&&!user.getPassword().equals(password)){
-			//response.sendRedirect("../user/login");
-			return "user/login";
+		//System.out.println(user);
+		System.out.println("MD5 Password : " +Md5Util.getMD5(password));
+ 		
+		if(session.getAttribute("verCode").equals(validCode)){
+			if(user==null || !user.getPassword().equals(Md5Util.getMD5(password))){
+				//response.sendRedirect("../user/login");
+				request.setAttribute("message", "用户名或密码错误！");
+				return "user/login";
+			}
+			else{
+				//跳转到首页
+				session.setAttribute("nowUser", user);
+				session.setAttribute("userAccount", user.getUseraccount());
+				session.setAttribute("userId", user.getUserid());
+				
+				//完成左侧的功能显示 left.jsp    查询用户权限，并存入session
+				List<Fun> funList = funService.selectByUser(user.getUserid());
+				//List<Fun> funList = funService.selectAlls();
+				System.out.println(funList.size());
+				session.setAttribute("funList", funList);
+				
+				//查询用户
+				PageInfo<User> pageInfos = userService.selectAll(1, 10);
+				request.setAttribute("pageInfo", pageInfos);
+				
+				//response.sendRedirect("index");
+				return "user/index";
+			}
 		}
 		else{
-			//跳转到首页
-			session.setAttribute("nowUser", user);
-			session.setAttribute("userAccount", user.getUseraccount());
-			session.setAttribute("userId", user.getUserid());
-			
-			//完成左侧的功能显示 left.jsp    查询用户权限，并存入session
-			//List<Fun> funList = funService.selectByUser(user.getUserid());
-			List<Fun> funList = funService.selectAlls();
-			System.out.println(funList.size());
-			session.setAttribute("funList", funList);
-			
-			//查询用户
-			PageInfo<User> pageInfos = userService.selectAll(1, 10);
-			request.setAttribute("pageInfo", pageInfos);
-			
-			//response.sendRedirect("index");
-			return "user/index";
+			request.setAttribute("message", "验证码输入错误！");
+			return "user/login";
 		}
+		
+		
 		
 	}
 	
@@ -144,6 +155,9 @@ public class UserController {
 		
 		//跳转界面
 		//request.getRequestDispatcher("../index.jsp").forward(request, response); 
+		request.setAttribute("message", "操作成功");
+		request.setAttribute("title", "操作");
+		
 		response.sendRedirect("index.jsp");
 	}
 	
@@ -151,7 +165,7 @@ public class UserController {
 	@RequestMapping("/userIndex")
 	//这里 不要带参数  否则不会匹配的
 	//@SystemControllerLog(description = "查询用户")
-	@SystemControllerLog
+	@SystemControllerLog(description = "查询用户")
 	public String index(HttpServletRequest request, Integer pageIndex ){
 		//查询用户列表
 		if(pageIndex==null){
@@ -185,12 +199,14 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/add")
+	@SystemControllerLog(description = "添加用户")
 	@Transactional   //这一块我不是很了解  搜索一下
-	public String add(UserDTO user){
+	public String add(UserDTO user, HttpServletRequest request){
 		
 		user.setUserid(uuid);
 		user.setUsercreate(new Date());
-		
+		String password = Md5Util.getMD5(user.getPassword());
+		user.setPassword(password);
 		userService.insertUser(user);
 		
 		String[] roles = user.getRoles().split(",");
@@ -203,6 +219,10 @@ public class UserController {
 			userRole.setUserRoleId(uuids);
 			userRoleService.insert(userRole);
 		}
+		
+		request.setAttribute("message", "操作成功");
+		request.setAttribute("title", "操作");
+		
 		return "redirect:/user/userIndex";
 	}
 	
@@ -254,6 +274,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/updateUser")
+	@SystemControllerLog(description = "修改用户")
 	@Transactional
 	public String updateUser(UserDTO userDTO,HttpServletRequest request){
 		//保持事务的一致性
@@ -294,13 +315,18 @@ public class UserController {
 		}
 		
 		System.out.println("用户修改成功");
+		
+		request.setAttribute("message", "操作成功");
+		request.setAttribute("title", "操作");
+		
 		return "redirect:/user/userIndex";
 		// 这样也可以 return "redirect:userIndex";
 		
 	}
 	
-	
+	//删除用户
 	@RequestMapping("/deleteUser")
+	@SystemControllerLog(description = "删除用户")
 	public String deleteUser(String userid ,HttpServletRequest request){
 		int flag = userService.deleteByPrimaryKey(userid);
 		
@@ -310,6 +336,19 @@ public class UserController {
 		request.setAttribute("message", "删除成功！");
 		
 		return "redirect:/user/userIndex";
+	}
+	
+	/**
+	 * 退出登录，取消session会话
+	 * @return
+	 */
+	@RequestMapping("/goOutLogin")
+	@SystemControllerLog(description = "退出登录")
+	public String goOutLogin(HttpSession session){
+		//取消session
+		session.removeAttribute("nowUser");
+		
+		return "redirect:/user/login";
 	}
 	
 }

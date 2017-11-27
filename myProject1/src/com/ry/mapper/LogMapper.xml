@@ -8,9 +8,10 @@
     <result column="logcreate" property="logcreate" jdbcType="DATE" />
     <result column="logexception" property="logexception" jdbcType="VARCHAR" />
     <result column="logip" property="logip" jdbcType="VARCHAR" />
+    <result column="loguser" property="loguser" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    logid, logtype, logname, logcreate, logexception, logip
+    logid, logtype, logname, logcreate, logexception, logip, loguser
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -40,11 +41,11 @@
   </delete>
   <insert id="insert" parameterType="com.ry.pojo.Log" >
     insert into log (logid, logtype, logname, 
-      logcreate, logexception, logip
+      logcreate, logexception, logip, loguser
       )
     values (#{logid,jdbcType=VARCHAR}, #{logtype,jdbcType=VARCHAR}, #{logname,jdbcType=VARCHAR}, 
       #{logcreate,jdbcType=DATE}, #{logexception,jdbcType=VARCHAR}, #{logip,jdbcType=VARCHAR}
-      )
+      ,#{loguser,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ry.pojo.Log" >
     insert into log
@@ -67,6 +68,9 @@
       <if test="logip != null" >
         logip,
       </if>
+      <if test="loguser != null" >
+        loguser,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="logid != null" >
@@ -86,6 +90,9 @@
       </if>
       <if test="logip != null" >
         #{logip,jdbcType=VARCHAR},
+      </if>
+      <if test="loguser != null" >
+        #{loguser,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -107,6 +114,9 @@
       <if test="logip != null" >
         logip = #{logip,jdbcType=VARCHAR},
       </if>
+      <if test="loguser != null" >
+        logip = #{loguser,jdbcType=VARCHAR},
+      </if>
     </set>
     where logid = #{logid,jdbcType=VARCHAR}
   </update>
@@ -117,6 +127,7 @@
       logcreate = #{logcreate,jdbcType=DATE},
       logexception = #{logexception,jdbcType=VARCHAR},
       logip = #{logip,jdbcType=VARCHAR}
+      loguser = #{loguser,jdbcType=VARCHAR}
     where logid = #{logid,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -43,7 +43,7 @@
 		
 		          <p>
 		            QQ:122110308
-		            ruanyang, 你可以 <a href="../../index.html">联系我们</a> 或者发邮件给我们.
+		            Ry, 你可以 <a href="../../index.html">联系我们</a> 或者发邮件给我们.
 		          </p>
 		
 		          

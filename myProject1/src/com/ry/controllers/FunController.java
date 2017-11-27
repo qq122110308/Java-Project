@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ry.annotation.SystemControllerLog;
 import com.ry.commons.PageInfo;
 import com.ry.pojo.Fun;
 import com.ry.service.FunService;
@@ -35,6 +36,7 @@ public class FunController implements Serializable {
 	FunService funService;
 	
 	@RequestMapping("index")
+	@SystemControllerLog(description = "查询功能")
 	public String  index(Integer pageIndex,HttpSession session,HttpServletRequest request){
 		//跳转系统功能页面
 		 List<Fun> list =(ArrayList<Fun>)session.getAttribute("funList");
@@ -59,6 +61,7 @@ public class FunController implements Serializable {
 		return "system/systemAdd";
 	}
 	@RequestMapping("add")
+	@SystemControllerLog(description = "添加功能")
 	public String add(String funname,String funurl,String funicon,String funfathernode,HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException{
 		
 		//解决中文乱码问题  除了这种还有没有别的方式 进行转码  我记得 web.xml那里已经处理过了
@@ -82,6 +85,9 @@ public class FunController implements Serializable {
 		PageInfo<Fun> funList=funService.selectAll(1,1000);
 		session.setAttribute("funList", funList.getList());
 		
+		request.setAttribute("message", "操作成功");
+		request.setAttribute("title", "操作");
+		
 		return "redirect:index";
 	}
 	
@@ -95,15 +101,19 @@ public class FunController implements Serializable {
 	}
 	
 	@RequestMapping("update")
+	@SystemControllerLog(description = "修改功能")
 	public String update(Fun fun,HttpServletRequest request) throws UnsupportedEncodingException{
 		//修改数据
 		System.out.println("功能修改的id为："+fun.getFunid());
 		request.setCharacterEncoding("utf-8");
 		funService.updateByPrimaryKey(fun);
+		request.setAttribute("message", "操作成功");
+		request.setAttribute("title", "操作");
 		return "redirect:index";
 	}
 	
 	@RequestMapping(value = "/sTree",produces = "application/json; charset=utf-8")
+	@SystemControllerLog(description = "展示功能树")
 	@ResponseBody
 	public String systemStree(HttpServletRequest request, HttpServletResponse response){
 		List<Fun> list = funService.selectAlls();

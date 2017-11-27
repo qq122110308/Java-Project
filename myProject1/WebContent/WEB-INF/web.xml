@@ -5,7 +5,19 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
-
+	
+	<!-- 登录验证码 -->
+	<servlet>
+		<servlet-name>AuthImage</servlet-name>
+		<servlet-class>com.ry.utils.ValidCode</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>AuthImage</servlet-name>
+		<url-pattern>/authImage</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 登录验证码 -->
+	
 	<!-- 统一字符编码为utf-8 -->
 	<filter>
 		<filter-name>charsetEncoding</filter-name>

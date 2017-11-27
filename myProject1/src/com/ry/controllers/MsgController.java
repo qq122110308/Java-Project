@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ry.annotation.SystemControllerLog;
 import com.ry.utils.HttpUtils;
 
 /** 
@@ -34,6 +35,7 @@ public class MsgController {
 	 * @return
 	 */
 	@RequestMapping(value = "/sendMsg", produces = "application/json;charset=UTF-8")
+	@SystemControllerLog(description = "·¢ËÍ¶ÌÐÅ")
 	@ResponseBody
 	public String sendMsg(){
 		String host = "http://sms.market.alicloudapi.com";

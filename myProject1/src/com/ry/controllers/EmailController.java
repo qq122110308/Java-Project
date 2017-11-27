@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ry.annotation.SystemControllerLog;
+
 /** 
 * @author ry 
 * @version 创建时间：2017年11月3日 上午10:01:06 
@@ -30,6 +32,7 @@ public class EmailController {
 	
 	
 	@RequestMapping("/emailSend")
+	@SystemControllerLog(description = "发送邮件")
 	public String sendEmail(String topic ,String content, HttpServletRequest request) throws Exception{
 		
 		/**

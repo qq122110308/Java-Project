@@ -12,6 +12,8 @@
 <script type="text/javascript" src="../js/role/index.js"></script>
 
 <body class="hold-transition skin-blue sidebar-mini">
+
+	<input type="hidden" id="alertMessage"  value="${message}" />
 	<div class="wrapper">
 		<!-- 头部 -->
 		<jsp:include page="../commons/top.jsp" ></jsp:include>
@@ -99,20 +101,16 @@
 		<!-- 尾部 -->
 		<jsp:include page="../commons/bottom.jsp" ></jsp:include>
 		
+		<!-- 引入模态框 -->	
+		<jsp:include page="../commons/modal.jsp"></jsp:include>
+		
 	</div>
-	
-<!-- 引入模态框 -->	
-<jsp:include page="../commons/modal.jsp"></jsp:include>
-	
 	
 <script type="text/javascript">
 	$(function(){
 		//加载左侧项目栏菜单,先看效果怎么样
 		
 	});
-	
-	
-	
 </script>
 	
 </body>

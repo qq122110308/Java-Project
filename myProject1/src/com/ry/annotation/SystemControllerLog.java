@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 * @author ry 
 * @version 创建时间：2017年11月6日 上午8:53:02 
 * 类说明  自定义注解 拦截Controller
+* 
 */
 @Target({ElementType.PARAMETER , ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

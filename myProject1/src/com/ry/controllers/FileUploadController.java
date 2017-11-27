@@ -3,11 +3,15 @@ package com.ry.controllers;
 import java.io.File;
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.ry.annotation.SystemControllerLog;
 
 /**
  * FileUploadController.java
@@ -25,7 +29,8 @@ public class FileUploadController {
 	}
 	
 	@RequestMapping("uploadFile")
-	public String uploadFile(MultipartFile file ,HttpSession session) throws IllegalStateException, IOException{
+	@SystemControllerLog(description = "下载文件")
+	public String uploadFile(MultipartFile file ,HttpSession session ,HttpServletRequest request) throws IllegalStateException, IOException{
 		System.out.println("file"+file);
 		String path = session.getServletContext().getRealPath("/files");
 		
@@ -37,6 +42,10 @@ public class FileUploadController {
 			if(fileName.endsWith("jpg")||fileName.endsWith("png")){
 				File files = new File(path,fileName);
 				file.transferTo(files);
+				
+				request.setAttribute("message", "上传成功");
+				request.setAttribute("title", "上传文件");
+				
 				return "file/uploadSuccess";
 			}
 			else{

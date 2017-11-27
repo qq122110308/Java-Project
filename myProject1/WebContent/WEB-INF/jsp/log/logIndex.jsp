@@ -8,6 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>操作日志记录</title>
 </head>
+
+
+<script type="text/javascript" src="../js/common/page.js"></script>
+
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 		<!-- 头部 -->
@@ -77,16 +81,19 @@
             </div>
             <!-- /.box-body -->
             <!-- 分页操作 -->
+            <form method="post" id="turnPage" action="../log/logIndex">
+            <input type="hidden" id="pageIndex" name="pageIndex" value="1">
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
                 <li><a href="#">&laquo;</a></li>
                 <c:forEach  begin="1" end="${pageInfo.pages }"   varStatus="status1">
-					<li><a href="">${status1.index}</a></li>
+					<li><a href="javascript:page(${status1.index})">${status1.index}</a></li>
                 </c:forEach>
                 
                 <li><a href="#">&raquo;</a></li>
               </ul>
             </div>
+            </form>
           </div>
           <!-- /.box -->
 		    	</div>

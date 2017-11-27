@@ -14,6 +14,8 @@ public class Log {
     private String logexception;
 
     private String logip;
+    
+    private String loguser;
 
     public String getLogid() {
         return logid;
@@ -62,4 +64,15 @@ public class Log {
     public void setLogip(String logip) {
         this.logip = logip == null ? null : logip.trim();
     }
+
+	public String getLoguser() {
+		return loguser;
+	}
+
+	public void setLoguser(String loguser) {
+		this.loguser = loguser;
+	}
+    
+    
+    
 }

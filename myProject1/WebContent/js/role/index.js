@@ -3,6 +3,16 @@
  * 2017年11月1日
  */
 
+$(function(){
+	if($("#alertMessage").val() != null && $("#alertMessage").val() != undefined && $("#alertMessage").val() != ""){
+		$("#execute").hide();
+		$("#modal").modal();
+		
+		$("#modalTitle").text("执行操作");
+		$("#modalContext").text("操作成功！");
+	}
+})
+
 function addData(){
 	window.location.href="goadd";
 }
@@ -45,3 +55,16 @@ function deleteData(){
 		//window.location.href="deleteUser?userid="+userid;
 	}
 }
+
+
+function alertMessage(){
+	if($("#alertMessage").val() != null && $("#alertMessage").val() != undefined){
+		$("#execute").hide();
+		$("#modal").modal();
+		
+		$("#modalTitle").text("执行操作");
+		$("#modalContext").text("操作成功！");
+	}
+	
+}
+

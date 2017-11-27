@@ -6,8 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>导出列表</title>
 </head>
+<!-- 引入js -->
+<script type="text/javascript" src="../js/excel/index.js"></script>
 
 <body class="hold-transition skin-blue sidebar-mini">
+
+	<input type="hidden" id="alertMessage"  value="${message}" />
 	<div class="wrapper">
 		<!-- 头部 -->
 		<jsp:include page="../commons/top.jsp" ></jsp:include>
@@ -98,6 +102,8 @@
 		
 		<!-- 尾部 -->
 		<jsp:include page="../commons/bottom.jsp" ></jsp:include> 
+		
+		<jsp:include page="../commons/modal.jsp"></jsp:include>
 		
 	</div>
 	

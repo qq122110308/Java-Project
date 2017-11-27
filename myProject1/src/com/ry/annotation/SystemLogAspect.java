@@ -118,6 +118,7 @@ public class SystemLogAspect {
             Log log =new Log();
             log.setLogcreate(new Date());
             log.setLogip(ip);
+            log.setLoguser(user.getUsername());
             log.setLogexception(null);
             log.setLogid(BuildUUID.getUUID());
             log.setLogname(getControllerMethodDescription(joinPoint));

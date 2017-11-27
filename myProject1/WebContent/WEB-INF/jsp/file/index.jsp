@@ -10,7 +10,11 @@
 <!-- Select2 -->
   <link rel="stylesheet" href="../bower_components/select2/dist/css/select2.min.css">
 </head>
+
+<script type="text/javascript" src="../js/file/index.js"></script>
 <body class="hold-transition skin-blue sidebar-mini">
+	
+	<input type="hidden" id="alertMessage"  value="${message}" />
 	<div class="wrapper">
 		<!-- 头部 -->
 		<jsp:include page="../commons/top.jsp" ></jsp:include>
@@ -85,6 +89,8 @@
 		
 		<!-- 尾部 -->
 		<jsp:include page="../commons/bottom.jsp" ></jsp:include>
+		
+		<jsp:include page="../commons/modal.jsp"></jsp:include>
 			
 	</div>
 	

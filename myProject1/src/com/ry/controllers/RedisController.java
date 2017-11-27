@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ry.annotation.SystemControllerLog;
 import com.ry.serviceImpl.RedisServiceImpl;
 
 import net.agkn.hll.HLL;
@@ -32,6 +33,7 @@ public class RedisController {
 	
 	
 	@RequestMapping("/redisIndex")
+	@SystemControllerLog(description = "进入redis主页")
 	public String redisIndex(HttpSession session , HttpServletRequest request){
 		//显示redis数据库的数据
 		List stringList = new ArrayList<>();  
@@ -56,6 +58,7 @@ public class RedisController {
 	}
 	
 	@RequestMapping("redisAdd")
+	@SystemControllerLog(description = "redis数据类型添加")
 	@ResponseBody
 	public String redisAdd(String type ,String key,String value){
 		//根据不同的类型进行添加操作
@@ -101,6 +104,7 @@ public class RedisController {
 	
 	//redis的发布(publish)和订阅(subscribe)
 	@RequestMapping("/publish")
+	@SystemControllerLog(description = "redis发布")
 	public String redisPublish() throws Exception {
 		long t = redisService.publis("redisChat", "there is a test");
 		Thread.sleep(5000);
@@ -113,6 +117,7 @@ public class RedisController {
 	}
 	//订阅
 	@RequestMapping("/subscriber")
+	@SystemControllerLog(description = "redis订阅")
 	public String redisSubscriber(){
 		redisService.subscribe("redisChat");
 		return "";

@@ -96,7 +96,7 @@
 		              </div>
 		              
 		              <div class="box-footer">
-		                <button type="button" class="btn btn-default">取消</button>
+		                <button type="button"   onclick="window.history.go(-1)" class="btn btn-default">取消</button>
 		                <button type="button"   onclick="checkAdd()" class="btn btn-info pull-right">确认</button>
 		              </div>
 		              <!-- /.box-footer -->

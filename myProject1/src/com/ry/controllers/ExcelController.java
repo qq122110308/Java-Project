@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ry.annotation.SystemControllerLog;
 import com.ry.commons.PageInfo;
 import com.ry.pojo.User;
 import com.ry.service.UserService;
@@ -38,6 +39,7 @@ public class ExcelController {
 	
 	
 	@RequestMapping("toExcel")
+	@SystemControllerLog(description = "生成Excel文件")
 	@ResponseBody
 	public  String toExcel(HttpServletResponse response){
 		response.setContentType("application/binary;charset=UTF-8");

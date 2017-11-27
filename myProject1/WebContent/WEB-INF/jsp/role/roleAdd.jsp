@@ -11,6 +11,7 @@
 
 <!-- 引用js文件 -->
 <script type="text/javascript" src="../js/role/index.js"></script>
+<script type="text/javascript" src="../js/role/update.js"></script>
 
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -91,7 +92,7 @@
 		              </div>
 		              <!-- /.box-body -->
 		              <div class="box-footer">
-		                <button type="button" class="btn btn-default">取消</button>
+		                <button type="button" onclick="window.history.go(-1)"  class="btn btn-default">取消</button>
 		                <button type="button" id="confirm" class="btn btn-info pull-right">确认</button>
 		              	<!-- hidden element -->
 		              	<input type="submit" value="确认" id="submit" style="display:none;" />
