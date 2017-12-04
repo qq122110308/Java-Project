@@ -14,10 +14,36 @@
 <script type="text/javascript" src="../js/ztree/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="../js/ztree/jquery.ztree.excheck.js"></script>
 	<script type="text/javascript" src="../js/ztree/jquery.ztree.exedit.js"></script>
-
+<script type="text/javascript" src="../js/system/index.js"></script>
 <SCRIPT type="text/javascript">
 	//这里请求系统菜单
-
+	var zNodes = [];
+	var setting = {
+			view: {
+				selectedMulti: false
+			},
+			edit: {
+				enable: true,
+				showRemoveBtn: false,
+				showRenameBtn: false
+			},
+			data: {
+				keep: {
+					parent:true,
+					leaf:true
+				},
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeDrag: beforeDrag,
+				beforeRemove: beforeRemove,
+				beforeRename: beforeRename,
+				onRemove: onRemove
+			}
+		};
+	
 	$(function(){
 		$.ajax({
 			type:"POST",			
@@ -26,39 +52,22 @@
 			dataType:"json",
 			success:function(res){
 				//console.log(res);
-				var zNodes = res;
-				var setting = {
-						view: {
-							selectedMulti: false
-						},
-						edit: {
-							enable: true,
-							showRemoveBtn: false,
-							showRenameBtn: false
-						},
-						data: {
-							keep: {
-								parent:true,
-								leaf:true
-							},
-							simpleData: {
-								enable: true
-							}
-						},
-						callback: {
-							beforeDrag: beforeDrag,
-							beforeRemove: beforeRemove,
-							beforeRename: beforeRename,
-							onRemove: onRemove
-						}
-					};
+				zNodes = res;
+				
 				$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+				
+				//这里如果取消注释 相当于调用两次函数,因为下面有
+/* 				$("#addParent").bind("click", {isParent:true}, add);
+				$("#addLeaf").bind("click", {isParent:false}, add);
+				$("#edit").bind("click", edit);
+				$("#remove").bind("click", remove);
+				$("#clearChildren").bind("click", clearChildren); */
 				
 			}
 		});
 	});
 	
-	
+	var log, className = "dark";
 	function beforeDrag(treeId, treeNodes) {
 		return false;
 	}
@@ -101,16 +110,26 @@
 		isParent = e.data.isParent,
 		nodes = zTree.getSelectedNodes(),
 		treeNode = nodes[0];
+		
 		if (treeNode) {
-			treeNode = zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, isParent:isParent, name:"new node" + (newCount++)});
+			//上级节点
+			var arrs = treeNode.id;
+			var arr = arrs.split("_");
+			$("#funfatherid").val(arr[1]);
+			//treeNode = zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, isParent:isParent, name:"new node" + (newCount++)});
 		} else {
-			treeNode = zTree.addNodes(null, {id:(100 + newCount), pId:0, isParent:isParent, name:"new node" + (newCount++)});
+			//树节点
+			$("#funfatherid").val("0");
+			//treeNode = zTree.addNodes(null, {id:(100 + newCount), pId:0, isParent:isParent, name:"new node" + (newCount++)});
 		}
 		if (treeNode) {
 			zTree.editName(treeNode[0]);
 		} else {
-			alert("叶子节点被锁定，无法增加子节点");
+			//alert("叶子节点被锁定，无法增加子节点");
 		}
+		$("#OperTitle").text("功能添加");
+		$("#OperExecute").bind("click",manageAdd);
+		$("#Oper").modal();
 	};
 	function edit() {
 		var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
@@ -143,6 +162,15 @@
 		}
 		zTree.removeChildNodes(treeNode);
 	};
+	
+	$(document).ready(function(){
+		//$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		$("#addParent").bind("click", {isParent:true}, add);
+		$("#addLeaf").bind("click", {isParent:false}, add);
+		$("#edit").bind("click", edit);
+		$("#remove").bind("click", remove);
+		$("#clearChildren").bind("click", clearChildren);
+	});
 	
 		
 
@@ -186,7 +214,16 @@
 					<ul id="treeDemo" class="ztree"></ul>
 				</div>
             	
-              
+              <li><p>对节点进行 增 / 删 / 改，试试看：<br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="callbackTrigger" checked /> removeNode 方法是否触发 callback<br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="addParent" href="#" title="增加父节点" onclick="return false;">增加父节点</a> ]
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="addLeaf" href="#" title="增加叶子节点" onclick="return false;">增加叶子节点</a> ]
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="edit" href="#" title="编辑名称" onclick="return false;">编辑名称</a> ]<br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="remove" href="#" title="删除节点" onclick="return false;">删除节点</a> ]
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="clearChildren" href="#" title="清空子节点" onclick="return false;">清空子节点</a> ]<br/>
+					remove log:<br/>
+					<ul id="log" class="log"></ul></p>
+				</li>
             </div>
             <!-- /.box-body -->
           </div>
@@ -200,6 +237,51 @@
 		<!-- 尾部 -->
 		<jsp:include page="../commons/bottom.jsp" ></jsp:include>
 		
+	</div>
+	
+	<!-- 添加、修改、删除操作的模态框 -->
+	<div class="modal fade" id="Oper" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="OperTitle">	</h4>
+	            </div>
+	            
+	            <div class="modal-body" id="OperContext">
+	            	<div class="form-group">
+	                  <label  class="col-sm-2 control-label">功能名称</label>
+	
+	                  <div class="col-sm-10">
+	                    <input type="text" class="form-control" name="funname" id="funname" placeholder="添加功能名称">
+	                  </div>
+	                </div>
+	                
+	                <div class="form-group">
+					  <label  class="col-sm-2 control-label">功能地址</label>
+					
+					  <div class="col-sm-10">
+					    <input type="text" class="form-control" name="funurl" id="funurl" placeholder="添加功能地址">
+					  </div>
+					</div>
+					
+					<div class="form-group">
+					  <label  class="col-sm-2 control-label">图标</label>
+					  <div class="col-sm-10">
+					    <input type="text" class="form-control" name="funicon" id="funicon" placeholder="添加图标">
+					  </div>
+					</div>
+					
+					<input type="hidden" class="form-control" name="funfatherid" id="funfatherid" placeholder="上级ID">
+	                	
+	            </div>
+	            
+	            <div class="modal-footer">
+	                <a class="btn btn-default" data-dismiss="modal">关闭</a>
+	                <a  class="btn btn-primary" id="OperExecute" >确认</a>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
 	</div>
 
 	

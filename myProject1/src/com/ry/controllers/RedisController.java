@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ry.annotation.SystemControllerLog;
+import com.ry.listen.RedisListen;
 import com.ry.serviceImpl.RedisServiceImpl;
 
 import net.agkn.hll.HLL;
@@ -113,14 +114,17 @@ public class RedisController {
     	t = redisService.publis("redisChat", "wqnmlgb");
     	
 		System.out.println(t);
-		return "redis/redisIndex";
+		return "redis/redisPublish";
 	}
 	//订阅
 	@RequestMapping("/subscriber")
 	@SystemControllerLog(description = "redis订阅")
 	public String redisSubscriber(){
-		redisService.subscribe("redisChat");
-		return "";
+		//参考 http://blog.csdn.net/u011734144/article/details/51782085
+		//把监听加进来
+		RedisListen listen = new RedisListen();
+		redisService.subscribe(listen,"redisChat");
+		return "redis/redisSubscriber";
 	}
 	
 }

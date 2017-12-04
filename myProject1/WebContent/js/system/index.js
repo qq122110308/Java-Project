@@ -18,3 +18,19 @@ function alertMessage(){
 	}
 	
 }
+
+
+function manageAdd(){
+	$.ajax({
+		url:"add",
+		data:{funname:$("#funname").val(),
+			  funurl:$("#url").val(),
+			  funicon:$("#funicon").val(),
+			  funfathernode:$("#funfatherid").val()},
+		type:"POST",
+		success:function(res){
+			console.log("执行成功！");	
+		}
+	});
+	
+}

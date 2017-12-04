@@ -51,6 +51,10 @@
 	    <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>  
 	</listener>  
 	
+	<listener>
+		<listener-class>com.ry.listen.RedisListen</listener-class>
+	</listener>
+	
 	<!-- SpringMVC  -->
 	<servlet>
 		<servlet-name>springMVC</servlet-name>

@@ -23,7 +23,7 @@ import redis.clients.util.Pool;
 */
 
 @Service
-public class RedisServiceImpl {
+public class RedisServiceImpl  extends JedisPubSub{
 	
 	@Autowired
 	private Pool<Jedis> jedisPool;
@@ -922,6 +922,11 @@ public class RedisServiceImpl {
     	//¶©ÔÄÏûÏ¢
     	jedis.subscribe(sub, channel);
     }
+    
+    public void onMessage(String channel, String message) {  
+        System.out.println("channel:" + channel + "receives message :" + message);  
+        this.unsubscribe();  
+    } 
 	 
 }
  
