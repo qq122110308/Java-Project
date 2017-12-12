@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -349,6 +350,17 @@ public class UserController {
 		session.removeAttribute("nowUser");
 		
 		return "redirect:/user/login";
+	}
+	
+	@RequestMapping("/execProcedure")
+	@SystemControllerLog(description="Ö´ÐÐ´æ´¢¹ý³Ì")
+	public String execProcedure(String userid){
+		HashMap map = new HashMap<>();
+		map.put("userid", userid);
+		map.put("usercontact", "18163114755");
+		userService.callProcedure(map);
+		
+		return "redirect:/user/userIndex";
 	}
 	
 }

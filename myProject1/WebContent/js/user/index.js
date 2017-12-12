@@ -111,4 +111,28 @@ function deleteData(){
 
 
 
+//调用存储过程测试
+function execProcedure(){
+	//判断哪个被选中，取出value
+	var userid=0;
+	
+	userid=$("input:radio:checked").val();
+	
+	console.log(userid);
+	if(userid==0||userid==undefined){
+		alert("请选择一条数据");
+	}
+	else{
+		$("#modal").modal();
+		//装饰modal
+		$("#modalTitle").text("执行存储过程");
+		$("#execute").attr("href","javascript:window.location.href='execProcedure?userid="+userid+"'");
+		
+		
+		//window.location.href="deleteUser?userid="+userid;
+	}
+}
+
+
+
 

@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -170,5 +171,10 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int deleteByPrimaryKey(String userid) {
 		return userDao.deleteByPrimaryKey(userid);
+	}
+
+	@Override
+	public void callProcedure(Map map) {
+		userDao.callProcedure(map);
 	}
 }

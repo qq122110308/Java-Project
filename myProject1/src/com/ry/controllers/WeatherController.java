@@ -42,9 +42,9 @@ public class WeatherController {
 		String host = "http://jisutqybmf.market.alicloudapi.com";
 		String path = "/weather/city";
 		String method = "GET";
-		String appcode = "c06117b0aa214d1e8a8f09e72c820c28";//自己的appCode
+		String appcode = "";//自己的appCode
 		Map<String, String> headers = new HashMap<>();
-		///最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+		///最后在header中的格式(中间是英文空格)为Authorization:APPCODE 
 		headers.put("Authorization", "APPCODE " +appcode);
 		Map<String, String> querys = new HashMap<String, String>();
 		JSONObject obj = new JSONObject();
@@ -78,7 +78,7 @@ public class WeatherController {
 	    String method = "GET";
 	    String appcode = "c06117b0aa214d1e8a8f09e72c820c28";
 	    Map<String, String> headers = new HashMap<String, String>();
-	    //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+	    //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 
 	    headers.put("Authorization", "APPCODE " + appcode);
 	    Map<String, String> querys = new HashMap<String, String>();
 	    querys.put("city", city);

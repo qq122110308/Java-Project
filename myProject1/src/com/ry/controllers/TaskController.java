@@ -1,5 +1,8 @@
 package com.ry.controllers;
 
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,6 +19,12 @@ public class TaskController {
 	@RequestMapping("/index")
 	public String index(){
 		return "task/taskIndex";
+	}
+	
+	@RequestMapping("/executeTask")
+	public void executeTask(){
+		Queue<String> logs = new LinkedBlockingQueue<>(1000);
+		
 	}
 }
  

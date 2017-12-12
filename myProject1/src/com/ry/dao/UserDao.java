@@ -1,6 +1,7 @@
 package com.ry.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,8 @@ public interface UserDao {
     List<User> selectAll();
     
     Long selectCount();
+    
+    void callProcedure(Map map);
 	
 	
 }

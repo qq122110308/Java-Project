@@ -42,6 +42,17 @@
   	from user
   </select>
   
+  
+  <!-- 关于存储过程的调动 -->
+  <select id="callProcedure" parameterType="map" statementType="CALLABLE">
+  	{
+  		call updateName(
+  		#{userid,mode=IN,jdbcType=VARCHAR},
+  		#{usercontact,mode=IN,jdbcType=VARCHAR}
+  		)
+  	}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from user
     where userid = #{userid,jdbcType=VARCHAR}

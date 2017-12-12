@@ -1,6 +1,7 @@
 package com.ry.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 
@@ -26,5 +27,8 @@ public interface UserService {
 	
 	//导出excel
 	public void export(String[] titles, ServletOutputStream out);
+	
+	//查询存储过程
+	public void callProcedure(Map map);
 	
 }
